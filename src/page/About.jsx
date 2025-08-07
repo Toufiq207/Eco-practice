@@ -6,12 +6,22 @@ import Blendere from '../assets/blendere.png'
 import Balti from '../assets/balti.png'
 import Button from '../component/Button'
 import AboutCart from '../component/AboutCart'
-
+import Heading from '../component/Heading'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 const About = () => {
+let data=useSelector((state)=>state.active.prevalue)
+
+ 
+
+ 
   return (
     <section className='py-[140px]'>
       <Container>
-        <Flex className='justify-between pb-[128px]'>
+       
+       <Heading text='About'/>
+            <p  className='pb-[100px]'><Link to={data=='Home' ? "/":`/${data}`}>{data}</Link> > About</p>
+        <Flex className='justify-between pb-[128px] pt-[136px]'>
          <div className='w-[49%] relative'> 
           <Image className='w-full ' src={Blendere}/>
           <Button className='absolute bottom-10 left-1/2 -translate-x-1/2' text='Our Brands'/>

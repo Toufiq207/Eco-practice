@@ -1,12 +1,21 @@
 import React from 'react'
 import Container from '../component/Container'
 import Button from '../component/Button'
+import { useSelector } from 'react-redux'
+import Heading from '../component/Heading'
+import { Link } from 'react-router-dom'
 
 
 const Contact = () => {
+  let data=useSelector((state)=>state.active.prevalue)
+  
   return (
+ 
     <section className='py-[140px]'>
+         
       <Container>
+         <Heading text='Contact'/>
+       <p  className='pb-[100px]'><Link to={data=='Home' ? "/":`/${data}`}>{data}</Link> > Contact</p>
         <h2 className='text-[39px] text-secondary font-dm font-bold'>Fill up a Form</h2>
            <label className='text-base text-secondary font-dm font-bold' htmlFor="name">Name <br />
           <input className='py-6 w-w49 border-b border-[#F0F0F0] mb-6' type="text" name="" id="name" placeholder='Your name here' />
