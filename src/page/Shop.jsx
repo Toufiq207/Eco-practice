@@ -8,10 +8,21 @@ import Pagination from '../component/Pagination';
 import Image from '../component/Image';
 import Icon1 from '../assets/pageaIcon1.png'
 import Icon2 from '../assets/pageaIcon2.png'
+import Pagination2 from '../component/Pagination2';
 
 
 const Shop = () => {
   let data=useSelector((state)=>state.active.prevalue)
+  let [desing,setDesing]=useState(true)
+  let [desing2,setDesing2]=useState(false)
+  let handleDesing=()=>{
+    setDesing(true)
+    setDesing2(false)
+  }
+  let handleDesing2=()=>{
+    setDesing2(true)
+    setDesing(false)
+  }
  
 
 
@@ -26,8 +37,8 @@ const Shop = () => {
           <div className='w-9/12 '>
       <Flex className='justify-between pb-[60px]'>
             <Flex className='gap-x-5'>
-              <div> <Image src={ Icon1 }/></div>
-              <div>  <Image src={ Icon2}/></div>
+              <div onClick={handleDesing}> <Image src={ Icon1 }/></div>
+              <div onClick={handleDesing2}>  <Image src={ Icon2}/></div>
            
           
           </Flex>
@@ -52,8 +63,9 @@ const Shop = () => {
          </Flex>
 </Flex>
       </Flex>
-          
-            <Pagination itemsPerPage={12} />
+          {desing?<Pagination itemsPerPage={12} />:null}
+          {desing2?<Pagination2 itemsPerPage={12} />:null}
+            
 
           </div>
         </Flex>
