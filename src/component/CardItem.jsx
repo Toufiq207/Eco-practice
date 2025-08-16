@@ -4,8 +4,22 @@ import Image from './Image'
 import Flex from './Flex'
 import { FaHeart, FaShoppingCart } from 'react-icons/fa'
 import { FaCodeCompare } from 'react-icons/fa6'
+import { useDispatch } from 'react-redux'
+import { addtocard } from '../slice/addtocardSlice'
 
 const CardItem = ({img,title,price}) => {
+
+  let dispatch=useDispatch()
+  let handleAddToCart=()=>{
+    dispatch(addtocard({
+title:title,
+price:price,
+
+img:img,
+quantity:1,
+    }  ))
+    
+  }
   return (
     <div className='w-[370px]   relative group '>
        
@@ -28,7 +42,7 @@ const CardItem = ({img,title,price}) => {
 <ul  className='flex flex-col py-6 px-8 items-end cursor-pointer '>
     <li className='text-base text-primary font-dm font-normal hover: text-secondary  hover:font-bold duration-500'>Add to Wish List <FaHeart  className='inline text-sm ml-4'/></li>
     <li className='text-base text-primary font-dm font-normal hover: text-secondary  hover:font-bold duration-500'>Compare <FaCodeCompare  className='inline text-sm ml-4'/></li>
-    <li className='text-base text-primary font-dm font-normal hover: text-secondary  hover:font-bold duration-500'>Add to Cart <FaShoppingCart  className='inline text-sm ml-4'/></li>
+    <li onClick={handleAddToCart} className='text-base text-primary font-dm font-normal hover: text-secondary  hover:font-bold duration-500'>Add to Cart <FaShoppingCart  className='inline text-sm ml-4'/></li>
 
 
 </ul>
