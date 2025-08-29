@@ -6,6 +6,8 @@ import { FaHeart, FaShoppingCart } from 'react-icons/fa'
 import { FaCodeCompare } from 'react-icons/fa6'
 import { useDispatch } from 'react-redux'
 import { addtocard } from '../slice/addtocardSlice'
+import { Link } from 'react-router-dom'
+
 
 const CardItem = ({img,title,price}) => {
 
@@ -28,11 +30,15 @@ quantity:1,
         <div className='w-full '>
          <Image className='w-full' src={img}/>
        </div>
-       <Flex className='justify-between items-center pt-6 pb-4'>
+        <Link to={`/product/${title}`}>
+        <Flex className='justify-between items-center pt-6 pb-4'>
         <h4 className='text-xl text-secondary font-dm font-bold'>{title}</h4>
         <p className='text-base text-primary font-dm font-normal'>${price}</p>
 
        </Flex>
+        </Link>
+       
+       
        <p className='text-base text-primary font-dm font-normal'>Black</p>
        <button className='py-2 px-8 bg-black text-white text-sm font-dm font-bold absolute top-5 left-5'>New</button>
        

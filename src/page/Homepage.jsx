@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Banner from '../layout/Banner'
 import Adds from '../layout/Adds'
 import Container from '../component/Container'
@@ -18,6 +18,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import NextArrow from '../component/NextArrow'
 import PrevArrow from '../component/prevArrow'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 
@@ -25,7 +27,7 @@ import PrevArrow from '../component/prevArrow'
 
 
 const Homepage = () => {
-
+let [alldata,SetAlldata]=useState([])
 
     var settings = {
  arrows:true,
@@ -36,6 +38,16 @@ const Homepage = () => {
     nextArrow: <NextArrow/>,
         prevArrow:<PrevArrow/>
   };
+  useEffect(()=>{
+async function alldata(){
+let data=await axios.get("https://dummyjson.com/products")
+SetAlldata(data.data.products);
+
+}
+alldata()
+  },[])
+  
+  
 
   return (
   
@@ -53,30 +65,18 @@ const Homepage = () => {
 
 
 <Slider {...settings}>
-      <div >
- <CardItem img={Blendere} title='Product one ' price='20'/>
+  {
+    alldata.map(item=>(
+
+ <div >
+ <CardItem img={item.thumbnail} title={item.title} price={item.price}/>
       </div>
-      <div >
-        <CardItem img={ Watch} title='Product two ' price='15'/>
-      </div>
-      <div >
-    <CardItem img={Jhuri } title='Product three ' price='17'/>
-      </div>
-      <div >
-          <CardItem img={ Bag} title='Product four ' price='18'/>
-      </div >
-      <div >
-        <CardItem img={Blendere} title='Product one ' price='20'/>
-      </div>
-      <div>
-     <CardItem img={ Watch} title='Product two ' price='15'/>
-      </div>
-      <div >
-      <CardItem img={Jhuri } title='Product three ' price='17'/>
-      </div>
-      <div>
-         <CardItem img={ Bag} title='Product four ' price='18'/>
-      </div>
+ 
+
+    ))
+  }
+     
+     
     </Slider>
   
 {/* <Flex className='justify-between'>
@@ -95,7 +95,17 @@ const Homepage = () => {
 
 
   <Heading className='pb-10 pt-[118px]' text='Our Bestsellers' />
-<Flex className='justify-between mb-[130px]'>
+<Flex className="gap-x-[45px] pb-[50px]">
+ {
+    alldata.map((item,index)=>(
+ (index>4 && index<9) ?
+ <CardItem img={item.thumbnail} title={item.title} price={item.price}/>
+      : ""
+    ))
+  }
+  </Flex>
+
+{/* <Flex className='justify-between mb-[130px]'>
 
 
   <CardItem img={Blendere} title='Product one ' price='20'/>
@@ -103,7 +113,7 @@ const Homepage = () => {
   <CardItem img={Jhuri } title='Product three ' price='17'/>
   <CardItem img={ Bag} title='Product four ' price='18'/>
 
-  </Flex>
+  </Flex> */}
  </Container>
 <Container>
 
@@ -114,14 +124,14 @@ const Homepage = () => {
 
 
   <Heading className='pb-10 pt-[118px]' text='Special Offers' />
-<Flex className='justify-between mb-[130px]'>
-
-
-  <CardItem img={Blendere} title='Product one ' price='20'/>
-  <CardItem img={ Watch} title='Product two ' price='15'/>
-  <CardItem img={Jhuri } title='Product three ' price='17'/>
-  <CardItem img={ Bag} title='Product four ' price='18'/>
-
+<Flex className="gap-x-[45px] pb-[50px]">
+ {
+    alldata.map((item,index)=>(
+ (index>10 && index<15) ?
+ <CardItem img={item.thumbnail} title={item.title} price={item.price}/>
+      : ""
+    ))
+  }
   </Flex>
  </Container>
  </>

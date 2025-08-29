@@ -4,7 +4,8 @@ import ReactPaginate from 'react-paginate';
 import CardItem from './CardItem';
 
 import Flex from './Flex';
-import Data from '../data'
+import axios from 'axios';
+
 
 
 // Example items, to simulate fetching from another resources.
@@ -16,7 +17,7 @@ function Items({ currentItems }) {
     
   {currentItems &&
         currentItems.map((item) => (
-            <CardItem img={item. image} title={item.title} price={item.price}/>
+             <CardItem img={item.thumbnail} title={item.title} price={item.price}/>
         ))}
 
     
@@ -25,18 +26,29 @@ function Items({ currentItems }) {
 }
 
 function Pagination2({ itemsPerPage }) {
+   let [alldata,SetAlldata]=useState([])
+      useEffect(()=>{
+  async function alldata(){
+  let data=await axios.get("https://dummyjson.com/products")
+  SetAlldata(data.data.products);
+  
+  }
+  alldata()
+    },[])
+    
+    
  
   const [itemOffset, setItemOffset] = useState(0);
 
 
   const endOffset = itemOffset + itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = Data.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(Data.length / itemsPerPage);
+  const currentItems = alldata.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(alldata.length / itemsPerPage);
 
   
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % Data.length;
+    const newOffset = (event.selected * itemsPerPage) % alldata.length;
     console.log(
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );
@@ -59,7 +71,7 @@ function Pagination2({ itemsPerPage }) {
         pageLinkClassName='bg-transparent border border-secondary py-2 px-4 hover:bg-secondary text-black hover:text-white mr-4'
 
       />
-      <p>Products from {itemOffset+1} to {endOffset< Data.length ? endOffset:Data.length} of {Data.length}</p>
+      <p>Products from {itemOffset+1} to {endOffset< alldata.length ? endOffset:alldata.length} of {alldata.length}</p>
     </div>
     </>
   );

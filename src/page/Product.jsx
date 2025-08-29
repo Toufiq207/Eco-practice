@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Container from '../component/Container'
 import Image from '../component/Image'
 import Balti from '../assets/balti.png'
@@ -9,21 +9,49 @@ import Flex from '../component/Flex'
 import Heading from '../component/Heading'
 import { FaStar } from 'react-icons/fa'
 import Button from '../component/Button'
+import {  useParams } from 'react-router-dom'
+import axios from 'axios'
+
 const Product = () => {
+let [alldata,SetAlldata]=useState([])
+let [product,SetProduct]=useState([])
+  let singleProduct=useParams()
+ 
+  
+  useEffect(()=>{
+async function alldata(){
+let data=await axios.get("https://dummyjson.com/products")
+SetAlldata(data.data.products);
+
+}
+alldata()
+  },[])
+ 
+useEffect(()=>{
+window.scrollTo({top:0})
+
+},[])
+
+ 
+ 
+ 
+ 
   return (
    <section className='py-[150px]'>
     <Container>
-    <Flex className='flex-wrap justify-between gap-y-10'>
-      <div className='w-w49'> <Image  className="w-full"  src={Balti}/></div>
-      <div className='w-w49'>    <Image  className="w-full"  src={SunGlass}/></div>
-      <div className='w-w49'>  <Image className="w-full"   src={ErePhone}/></div>
-      <div className='w-w49'>  <Image className="w-full"   src={Table}/></div>
-       
+      {
+        
+    alldata.map(item=>{
+
+      
+  if(item.title==singleProduct.title){
+return (
+  <>
+  
+  <Image src={item.thumbnail}/>
    
-     
-     
-    </Flex>
-    <Heading className='pt-12 pb-4' text='Product'/>
+    
+    <Heading className='pt-12 pb-4' text={item.title}/>
     <Flex className='gap-x-6 items-center'>
       <ul className='flex gap-x-[2px] '>
         <li><FaStar className='text-[#FFD881] text-sm'/></li>
@@ -36,7 +64,7 @@ const Product = () => {
     </Flex>
     <Flex className='items-center gap-x-[22px] py-6 border-b border-[#F0F0F0] w-w49'>
       <p className='text-base text-primary font-dm font-normal'><del>$88.00</del></p>
-      <p className='text-xl text-secondary font-dm font-bold'>$44.00</p>
+      <p className='text-xl text-secondary font-dm font-bold'>${item.price}</p>
     </Flex>
     <Flex className='items-center gap-x-[53px] pt-[33px]'>
       <h4 className='text-base text-secondary  font-dm font-bold'>COLOR:</h4>
@@ -116,7 +144,7 @@ const Product = () => {
     </Flex>
      <p className='text-sm text-primary font-dm font-normal'>6 month ago</p>
         </Flex>
-        <p className='text-sm text-primary font-dm font-normal  border-b border-[#F0F0F0] w-full py-8'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+        <p className='text-sm text-primary font-dm font-normal  border-b border-[#F0F0F0] w-full py-8'>{item.description}</p>
         <h4 className='text-xl text-secondary  font-dm font-bold py-12'>Add a Review</h4>
         <label className='text-base text-secondary font-dm font-bold' htmlFor="name">Name <br />
           <input className='py-6 w-w49 border-b border-[#F0F0F0] mb-6' type="text" name="" id="name" placeholder='Your name here' />
@@ -131,6 +159,18 @@ const Product = () => {
           </label>
           <br />
           <Button text='Post'/>
+  </>
+)
+
+    
+  }
+  
+    
+})
+
+  
+      }
+   
     </Container>
    </section>
   )

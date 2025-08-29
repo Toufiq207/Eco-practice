@@ -6,7 +6,7 @@ import './index.css'
 import store from './store'
 import { Provider } from 'react-redux'
 
-
+import firebaseConfig from './firebaseConfig'
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <App />
